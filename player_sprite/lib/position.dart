@@ -14,7 +14,7 @@ class _SpritePositionState extends State<SpritePosition> {
 
   @override
   void initState() {
-    _position = EPosition.Front;
+    _position = EPosition.Right;
     super.initState();
   }
 
@@ -33,10 +33,10 @@ class _SpritePositionState extends State<SpritePosition> {
         return 2.0;
 
       case EPosition.Left:
-        return 3.0;
+        return 4.0;
 
       case EPosition.Right:
-        return 4.0;
+        return 6.0;
 
       default:
         return 2.0;
@@ -69,6 +69,7 @@ class _SpritePositionState extends State<SpritePosition> {
               Position(48.0, 48.0),
               animation.Animation.sequenced('poke.png', 2,
                   textureX: 24 * getPositionX(_position),
+                  textureY: 24 * 6.0,
                   textureHeight: 24,
                   textureWidth: 24),
             ),
