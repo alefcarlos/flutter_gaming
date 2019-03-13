@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flame/animation.dart' as animation;
@@ -48,7 +47,6 @@ class _SpritePositionState extends State<SpritePosition> {
   Widget build(BuildContext context) {
     print(_position);
     print(getPositionX(_position));
-    Random rand = new Random();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
