@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flame/animation.dart' as animation;
 import 'package:flame/flame.dart';
@@ -13,7 +15,7 @@ class _SpritePositionState extends State<SpritePosition> {
 
   @override
   void initState() {
-    _position = EPosition.Back;
+    _position = EPosition.Front;
     super.initState();
   }
 
@@ -29,16 +31,16 @@ class _SpritePositionState extends State<SpritePosition> {
         return 0.0;
 
       case EPosition.Back:
-        return 1.0;
-
-      case EPosition.Left:
         return 2.0;
 
-      case EPosition.Right:
+      case EPosition.Left:
         return 3.0;
 
+      case EPosition.Right:
+        return 4.0;
+
       default:
-        return 1.0;
+        return 2.0;
     }
   }
 
@@ -46,14 +48,12 @@ class _SpritePositionState extends State<SpritePosition> {
   Widget build(BuildContext context) {
     print(_position);
     print(getPositionX(_position));
+    Random rand = new Random();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        IconButton(
-          icon: Icon(
-            Icons.arrow_upward,
-            size: 20.0,
-          ),
+        ArrowIcon(
+          iconData: Icons.arrow_upward,
           onPressed: () {
             changePosition(EPosition.Back);
           },
@@ -61,43 +61,52 @@ class _SpritePositionState extends State<SpritePosition> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.arrow_back,
-                size: 20.0,
-              ),
+            ArrowIcon(
+              iconData: Icons.arrow_back,
               onPressed: () {
                 changePosition(EPosition.Left);
               },
             ),
             Flame.util.animationAsWidget(
-                Position(48.0, 48.0),
-                animation.Animation.sequenced('poke.png', 2,
-                    textureX: 24 * getPositionX(_position),
-                    textureHeight: 24,
-                    textureWidth: 24)
-                  ..loop = false),
-            IconButton(
-              icon: Icon(
-                Icons.arrow_forward,
-                size: 20.0,
-              ),
+              Position(48.0, 48.0),
+              animation.Animation.sequenced('poke.png', 2,
+                  textureX: 24 * getPositionX(_position),
+                  textureHeight: 24,
+                  textureWidth: 24),
+            ),
+            ArrowIcon(
+              iconData: Icons.arrow_forward,
               onPressed: () {
                 changePosition(EPosition.Right);
               },
             ),
           ],
         ),
-        IconButton(
-          icon: Icon(
-            Icons.arrow_downward,
-            size: 20.0,
-          ),
+        ArrowIcon(
+          iconData: Icons.arrow_downward,
           onPressed: () {
             changePosition(EPosition.Front);
           },
         ),
       ],
+    );
+  }
+}
+
+class ArrowIcon extends StatelessWidget {
+  final IconData iconData;
+  final Function onPressed;
+
+  ArrowIcon({@required this.iconData, @required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(
+        iconData,
+        size: 20.0,
+      ),
+      onPressed: onPressed,
     );
   }
 }
